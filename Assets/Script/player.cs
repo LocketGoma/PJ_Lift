@@ -25,6 +25,11 @@ public class player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKeyDown("x"))
+        {
+            Manager.ResetGame();
+        }
+
         inputH = Input.GetAxis("Horizontal");
 
 

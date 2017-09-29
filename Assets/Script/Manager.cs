@@ -15,7 +15,15 @@ public class Manager : MonoBehaviour {
 	void Update () {
 		
 	}
-
+    public static void ResetGame()
+    {
+        SceneManager.LoadScene(stageLevel, LoadSceneMode.Single);
+    }
+    public static void Set_level(int level)
+    {
+        if(level!=-1)
+        stageLevel = level;
+    }
    public static void EndGame()
     {
         stageLevel++;
