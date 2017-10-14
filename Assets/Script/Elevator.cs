@@ -16,12 +16,12 @@ public class Elevator : MonoBehaviour
 //    public int code = 1;
 
     [Header("멈출 층 적기")]
-    public int start_floor = 1;
-    public int roof_floor = 2;
+    public int Up_floor = 2;
+    public int Down_floor = 1;
     public bool toroof = true;  //false : 아래가 시작
 
     [Header("발판 정보")]
-    public GameObject roof;
+    public GameObject floor;
 
     [Header("문 정보")]
     public GameObject door_left;
@@ -32,6 +32,9 @@ public class Elevator : MonoBehaviour
     public enum Cross_door { Left, Right }
     public Cross_door crossd_up;
 
+    [Header("ETC")]
+    public bool traced = false;     //엘리베이터가 유저 추적하는지 여부.
+
     int isup = 1;
     bool ismoving = false;
     bool use = false;
@@ -41,7 +44,7 @@ public class Elevator : MonoBehaviour
     void Start()
     {
         start = transform.position;
-        movefloor = roof_floor - start_floor;
+        movefloor = Up_floor - Down_floor;
         speed = speed / 100;                    //0.02 = 1프레임당 1유닛 (1단위 거리)
         if (!toroof)
         {
@@ -51,9 +54,24 @@ public class Elevator : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void Update()   //수정 필요
     {
-
+        
+        if (traced == true && use == false)
+        {            
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+   //         Debug.Log("user : " + player.transform.position.y + " obj : "+ transform.position.y);
+            if (player.transform.position.y-1 <= transform.position.y && start.y < transform.position.y)
+            {
+                StartCoroutine("move_Down");
+                StopCoroutine("move_Up");
+            }
+            else if (player.transform.position.y+1 >= transform.position.y && start.y + movefloor * 5 > transform.position.y)
+            {
+                StartCoroutine("move_Up");
+                StopCoroutine("move_Down");
+            }
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -69,7 +87,7 @@ public class Elevator : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            other.transform.parent = roof.transform;        //움직이는 플랫폼에서
+            other.transform.parent = floor.transform;        //움직이는 플랫폼에서
         }                                                   //플레이어 오브젝트를
         if (use)                                            //아예 플랫폼 자식으로 때려박기.
         {
@@ -112,7 +130,6 @@ public class Elevator : MonoBehaviour
 
         target_elevator.transform.position += new Vector3(0, -speed, 0);
 
-
         yield return new WaitForFixedUpdate();
         StartCoroutine("move_Down");
         if (start.y > transform.position.y)
@@ -132,6 +149,15 @@ public class Elevator : MonoBehaviour
             ismoving = false;
             StopCoroutine("move_Up");
             StopCoroutine("move_Down");
+            if (isup == 1)
+            {
+                StartCoroutine("move_Down");
+            }
+            if (isup == 0)
+            {
+                StartCoroutine("move_Up");
+            }
+
         }
         
 
@@ -159,10 +185,10 @@ public class Elevator : MonoBehaviour
     }
     void Open_cross(int isUp)
     {
-        Debug.Log("Crossed");
+ //       Debug.Log("Crossed");
         if (crossd_up == Cross_door.Left)
         {
-            Debug.Log("Left");
+//            Debug.Log("Left");
             if (isUp == 1)
             {
                 door_right.GetComponent<Door>().open_door();
@@ -175,7 +201,7 @@ public class Elevator : MonoBehaviour
         }
        else if (crossd_up == Cross_door.Right)
         {
-            Debug.Log("Right");
+ //           Debug.Log("Right");
             if (isUp == 1)
             {
                 door_left.GetComponent<Door>().open_door();

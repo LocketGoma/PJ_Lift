@@ -47,8 +47,10 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Script\Door.cs" />
+     <Compile Include="Assets\Script\Door_Switch.cs" />
      <Compile Include="Assets\Script\Elevator.cs" />
      <Compile Include="Assets\Script\ElevatorStayed.cs" />
+     <Compile Include="Assets\Script\Key.cs" />
      <Compile Include="Assets\Script\LevelTicker.cs" />
      <Compile Include="Assets\Script\Manager.cs" />
      <Compile Include="Assets\Script\Presser.cs" />

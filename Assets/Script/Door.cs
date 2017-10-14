@@ -6,7 +6,7 @@ public class Door : MonoBehaviour {
 
     [Header("작동 여부")]
     public bool can_open = true;    //false:트리거 작동 안함.
-    public float speed = 300f;        //문짝 열리는 속도
+    public float speed = 500f;        //문짝 열리는 속도
     public float length = 2f;       //문짝 열리는 크기
 //    public int code = 1;            //엘리베이터 번호 <- 특정화 용
 
@@ -48,22 +48,23 @@ public class Door : MonoBehaviour {
     }
 
 
-    IEnumerator move_open_door()
+    IEnumerator move_open_door()                //구버전 스크립트
     {
- //       Debug.Log("start:" + (start.z + length));
- //       Debug.Log("now:" + transform.position.z);
-        
-        transform.position += new Vector3(0,0,Time.deltaTime);
+        //       Debug.Log("start:" + (start.z + length));
+        //       Debug.Log("now:" + transform.position.z);
 
+        //transform.position += new Vector3(0,0,Time.deltaTime);
 
-        yield return new WaitForSeconds(1 / speed);
+        transform.position += new Vector3(0, 0, (speed * Time.deltaTime / 100));
+        //yield return new WaitForSeconds(1 / speed);
+        yield return new WaitForFixedUpdate();
         StartCoroutine("move_open_door");
         if(start.z+length < transform.position.z)
         {
             StopCoroutine("move_open_door");
         }
     }
-    IEnumerator move_close_door()
+    IEnumerator move_close_door()             //신버전 스크립트
     {
         //       Debug.Log("start:" + (start.z));
         //       Debug.Log("now:" + transform.position.z);

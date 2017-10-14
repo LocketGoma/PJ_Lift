@@ -10,7 +10,9 @@ public class player : MonoBehaviour {
     [Header("Moving speed")]
     public float speed = 10f;
 
-
+    [Header("키 사용 여부")]
+    public bool use_key = false;
+    bool has_key = false;
     public Rigidbody rbody;
     private float inputH; // 수평 입력
 
@@ -43,9 +45,37 @@ public class player : MonoBehaviour {
         Debug.Log(other.gameObject.tag);
         if (other.gameObject.tag == "Next")          //게임 종료
         {
-            other.enabled = false;      //이거 뭐냐
-            Manager.EndGame();
+            if (use_key == false)
+            {
+                other.enabled = false;      //지금 화면 멈추게 하기.
+                Manager.EndGame();
+            }
+            if (use_key == true)            //키 사용 설정을 켜면.
+            {
+                if (has_key == true)
+                {
+                    other.enabled = false;      
+                    Manager.EndGame();
+                }
+            }
+        }   //-----
+        if (other.gameObject.tag == "Key")
+        {
+            if (use_key == true)
+            {
+                if (has_key == false)
+                {
+                    has_key = true;
+                    Destroy(other.gameObject,0f);
+                }
+            }
+        }   //-------
+
+        if (other.gameObject.tag == "DeadSpace")
+        {
+            Manager.ResetGame();
         }
+
     }
 
 }

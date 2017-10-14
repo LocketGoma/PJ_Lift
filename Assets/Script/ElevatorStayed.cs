@@ -24,6 +24,9 @@ public class ElevatorStayed : MonoBehaviour {
     public GameObject door_left;
     public GameObject door_right;
 
+    [Header("ETC")]
+    public bool traced = false;     //엘리베이터가 유저 추적하는지 여부.
+
     int isup = 1;
     bool ismoving = false;
     bool use = false;
@@ -45,7 +48,21 @@ public class ElevatorStayed : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
+        if (traced == true && use == false)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            //         Debug.Log("user : " + player.transform.position.y + " obj : "+ transform.position.y);
+            if (player.transform.position.y - 2 <= transform.position.y && start.y < transform.position.y)
+            {
+                StartCoroutine("move_Down");
+                StopCoroutine("move_Up");
+            }
+            else if (player.transform.position.y + 2 >= transform.position.y && start.y + movefloor * 5 > transform.position.y)
+            {
+                StartCoroutine("move_Up");
+                StopCoroutine("move_Down");
+            }
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -157,7 +174,7 @@ public class ElevatorStayed : MonoBehaviour {
     }   
     void Close_door()
     {
-        Debug.Log("close!");
+//        Debug.Log("close!");
         door_left.GetComponent<Door>().close_door();
         door_right.GetComponent<Door>().close_door();
     }
