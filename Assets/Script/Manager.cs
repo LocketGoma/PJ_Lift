@@ -38,6 +38,8 @@ public class Manager : MonoBehaviour {
             input = 8;
         if (Input.GetKeyDown("8"))
             input = 9;
+        if (Input.GetKeyDown("9"))
+            input = 10;
 
         if (input!=0)
         SceneManager.LoadScene(input, LoadSceneMode.Single);
