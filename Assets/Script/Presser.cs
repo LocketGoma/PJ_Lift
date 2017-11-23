@@ -7,7 +7,7 @@ public class Presser : MonoBehaviour {
     
 //    public int code=1;
     public GameObject trigger;
-    public GameObject target;
+    public GameObject target=null;
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +25,7 @@ public class Presser : MonoBehaviour {
         if (other.gameObject.tag == "Player")
         {
  //           Debug.Log("ok");
+            if(target!=null)
             target.GetComponent<Door>().open_door();        //타 오브젝트 스크립트 갖고오기
         }
     }

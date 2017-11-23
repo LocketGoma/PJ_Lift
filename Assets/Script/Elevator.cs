@@ -57,7 +57,7 @@ public class Elevator : MonoBehaviour
     void Update()   //수정 필요
     {
         
-        if (traced == true && use == false)
+        if (traced == true && use == false)     //traced는 못써먹겠음;
         {            
             GameObject player = GameObject.FindGameObjectWithTag("Player");
    //         Debug.Log("user : " + player.transform.position.y + " obj : "+ transform.position.y);
@@ -88,6 +88,8 @@ public class Elevator : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             other.transform.parent = floor.transform;        //움직이는 플랫폼에서
+            Debug.Log(other.transform.position.z);
+            other.transform.position = new Vector3(other.transform.position.x, other.transform.position.y, floor.transform.position.z);  //앞으로 튀어나오는 버그 설정.
         }                                                   //플레이어 오브젝트를
         if (use)                                            //아예 플랫폼 자식으로 때려박기.
         {
@@ -144,7 +146,7 @@ public class Elevator : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (ismoving == true)
+        if (ismoving == true)               //움직이는 중에 탈주시
         {
             ismoving = false;
             StopCoroutine("move_Up");
