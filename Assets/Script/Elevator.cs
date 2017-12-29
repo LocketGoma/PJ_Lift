@@ -89,7 +89,7 @@ public class Elevator : MonoBehaviour
         {
             other.transform.parent = floor.transform;        //움직이는 플랫폼에서
             Debug.Log(other.transform.position.z);
-            other.transform.position = new Vector3(other.transform.position.x, other.transform.position.y, floor.transform.position.z);  //앞으로 튀어나오는 버그 설정.
+            other.transform.position = new Vector3(other.transform.position.x, other.transform.position.y, floor.transform.position.z-(float)0.7);  //앞으로 튀어나오는 버그 설정.
         }                                                   //플레이어 오브젝트를
         if (use)                                            //아예 플랫폼 자식으로 때려박기.
         {
