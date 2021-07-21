@@ -24,7 +24,7 @@ The lift v0.12
 - 양문을 통로로 사용하기 위해 반응을 느리게 한것으로 버그가 아닙니다.
 
 
-버그가 발견될 시 gom@kiwing.co.kr / nothappa@gmail.com / stu1993@naver.com / 트위터 @locketgoma로 알려주세요.
+버그가 발견될 시 gom@kiwing.co.kr트위터 @locketgoma로 알려주세요.
 
 -locketgoma
 
